@@ -1,0 +1,154 @@
+<<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<link href="beauty.css" rel="stylesheet" type="text/css"/>
+	<title>毕业相册</title>
+	<script type="text/javascript">
+/*
+	*1.闪动的效果（瞬间把宽高变为0，scal用来缩放，以中心点为轴缩放）
+	*2.图片缩小后会变大，透明度同时从1变到0
+	*3.图片旋转【有层次感】，同时透明度由0变为1（所有图片的前两个动作都走完，才开始旋转）
+*/
+	window.onload=function(){
+		var btn=document.getElementById("button");
+		var imgs=document.querySelectorAll("img");
+		var endNum=0;     				//运动完成的图片数量
+		var endall=0;
+		var on=true;					//用来决定用户是否可以再次点击
+		//给button添加点击事件
+		btn.onclick=function(){
+			if(!on){
+				return;
+			}
+			on=false;
+			for(var i=0;i<imgs.length;i++){
+				/*imgs[i].style.transition='1s';
+
+				motion(imgs[i],'1s',function(){
+					imgs[i].style.transform='scale(0)';
+				},function(){
+					console.log(1);
+				});*/
+				
+				(function(i){
+					setTimeout(function(){
+				motion(imgs[i],'20ms',function(){
+					this.style.transform='scale(0)';				
+				},function(){
+					//第二个运动在这里写（因为callBack函数是在motion执行完毕之后执行的）
+					motion(this,'1s',function(){
+						this.style.transform='scale(1)';
+						this.style.opacity=0;
+					},function(){
+						endNum++;
+						if(endNum==imgs.length){
+							//做第三次运动
+							toBig();
+							endNum=0;
+						}
+					});
+				});
+			},Math.random()*1000);
+				})(i);       //直接调用
+			}
+
+
+			/*var a=function(){      //函数表达式   ，可直接执行
+
+			}*/
+			//function b(){}          //函数声明，不能直接执行
+
+		};
+ 
+
+		//运动函数 （运动的对象，运动时间，运动的属性函数，运动完成后要做的事情【回调函数】）
+		function motion(obj,time,doFn,callBack){
+			obj.style.transition=time;
+			doFn.call(obj);	//call的作用：调用函数并把this指向obj//this指向的问题（默认指向window）
+
+			var called=false;
+			obj.addEventListener('transitionend',function(){
+				if(!called){
+					callBack&&callBack.call(obj);//左边真则返回右侧，左边为假则返回左边
+					called=true;
+				}			
+			},false);    						//false表示在冒泡阶段去调用这个函数
+		}
+
+
+		function toBig(){
+			//用来做第三个效果
+			/*
+			 *坐标轴
+			 *x轴平行地面
+			 *y轴垂直地面
+			 *z轴垂直屏幕
+			 *层次感需要有位移
+			 */
+			 for(var i=0;i<imgs.length;i++){
+			 	imgs[i].style.transition='';
+			 	//css3中让物体旋转，需要给初始值
+			 	imgs[i].style.transform='rotateY(0deg) translateZ(-'+Math.random()*500+'px)';
+
+			 	//为了在循环中能够找到i值
+			 	(function(i){
+			 		setTimeout(function(){
+			 			motion(imgs[i],'1.5s',function(){
+			 				this.style.opacity=1;
+			 				this.style.transform='rotateY(-360deg) translateZ(0)';
+			 			},function(){
+			 				endall++;
+			 				if(endall==imgs.length){
+			 					//所有图片运动完毕
+			 					on=true;
+			 					endall=0;
+			 				}
+			 			});
+			 		},Math.random()*1000);
+			 	})(i);
+			 }
+		}
+
+	}
+	</script>
+</head>
+<body>
+	<div id="imgWrap">
+		
+		<img src="photos/1.jpg" width="150" height="150">
+		<img src="photos/2.jpg" width="150" height="150">
+		<img src="photos/3.jpg" width="150" height="150">
+		<img src="photos/4.jpg" width="150" height="150">
+		<img src="photos/5.jpg" width="150" height="150">
+		<img src="photos/6.jpg" width="150" height="150">
+		<img src="photos/7.jpg" width="150" height="150">
+		<img src="photos/8.jpg" width="150" height="150">
+		<img src="photos/9.jpg" width="150" height="150">
+		<img src="photos/10.jpg" width="150" height="150">
+		<img src="photos/11.jpg" width="150" height="150">
+		<img src="photos/12.jpg" width="150" height="150">
+		<img src="photos/13.jpg" width="150" height="150">
+		<img src="photos/14.jpg" width="150" height="150">
+		<img src="photos/15.jpg" width="150" height="150">
+		<img src="photos/16.jpg" width="150" height="150">
+		<img src="photos/17.jpg" width="150" height="150">
+		<img src="photos/18.jpg" width="150" height="150">
+		<img src="photos/19.jpg" width="150" height="150">
+		<img src="photos/20.jpg" width="150" height="150">
+		<img src="photos/21.jpg" width="150" height="150">
+		<img src="photos/22.jpg" width="150" height="150">
+		<img src="photos/23.jpg" width="150" height="150">
+		<img src="photos/24.jpg" width="150" height="150">
+		<img src="photos/25.jpg" width="150" height="150">
+		<img src="photos/26.jpg" width="150" height="150">
+		<img src="photos/27.jpg" width="150" height="150">
+		<img src="photos/28.jpg" width="150" height="150">
+		<img src="photos/29.jpg" width="150" height="150">
+		<img src="photos/30.jpg" width="150" height="150">
+		<img src="photos/31.jpg" width="150" height="150">
+		<img src="photos/32.jpg" width="150" height="150">
+	</div>
+	<
+	<button id="button">点击查看效果</button>
+</body>
+</html>
