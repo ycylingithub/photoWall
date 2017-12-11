@@ -1,3 +1,8 @@
+html {
+    font-size: 62.5%;
+    color: #222;
+}
+
 #imgWrap{
 		margin:0 auto;
 		width: 1200px;
@@ -8,18 +13,28 @@
 		float: left;
 	}
 	#button{
-		margin:0 auto;
+		/*margin:0 auto;*/
 		width: 150px;
 		height: 50px;
 		text-align: center;
 		font:16px/40px "微软雅黑";
-		background-color: grey;
+		background-color: #ff0000;
 		border: transparent;
-		margin-left: 45%;
+		/*left: 50%;*/
 		color: #fff;
 		padding: 0 20px;
 		border-radius: 5px;
 		box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
 		cursor: pointer;
 		margin-top: 50px;
+		/*transform:translateX(-50%) translateY(-50%);*/
 	}
+@media only screen and (max-width: 1220px) {
+		#imgWrap{
+			width: 100%;
+			perspective: 800px;
+		}
+		#imgWrap img{
+			width: 12vw;
+			height: 12vw;
+		}
